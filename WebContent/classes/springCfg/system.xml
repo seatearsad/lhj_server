@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean name="gameSystem" class="com.wolfroc.slots.system.impl.GameSystemImpl" singleton="true" autowire="byName"/>
+	<bean name="playerSystem" class="com.wolfroc.slots.system.impl.PlayerSystemImpl" singleton="true" autowire="byName"/>
+	<bean name="gameCalculationSystem" class="com.wolfroc.slots.system.impl.GameCalculationSystemImpl" singleton="false" autowire="byName"/>
+</beans>

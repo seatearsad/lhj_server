@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping SYSTEM "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+ <hibernate-mapping>
+ 	 <class name="com.wolfroc.slots.pojo.PlayerPojo" table="player">
+        <id name="id" type="long">
+			<column name="id" />
+			<generator class="increment" />
+		</id>
+		<property name="userId" type="int">
+            <column name="userId" not-null="true" />
+        </property>
+        <property name="playerName" type="string">
+            <column name="playerName" not-null="true" />
+        </property>
+        <property name="gender" type="byte">
+            <column name="gender" not-null="true" default="0" />
+        </property>
+        <property name="exp" type="int">
+            <column name="exp" not-null="true" default="0" />
+        </property>
+        <property name="level" type="int">
+            <column name="level" not-null="true" default="1" />
+        </property>
+        <property name="total_screen" type="long">
+            <column name="total_screen" not-null="true" default="0" />
+        </property>
+        <property name="total_win" type="long">
+            <column name="total_win" not-null="true" default="0" />
+        </property>
+        <property name="total_amount" type="long">
+            <column name="total_amount" not-null="true" default="0" />
+        </property>
+        <property name="curr_amount" type="long">
+            <column name="curr_amount" not-null="true" default="0" />
+        </property>
+        <property name="free_times" type="string">
+            <column name="free_times" length="200" not-null="true" />
+        </property>
+        <property name="level_bet" type="string">
+            <column name="level_bet" length="200" not-null="true" />
+        </property>
+        <property name="level_line" type="string">
+            <column name="level_line" length="200" not-null="true" />
+        </property>
+        <property name="createTime" type="string">
+            <column name="createTime" length="50" not-null="true" />
+        </property>
+        <property name="loginTime" type="string">
+            <column name="loginTime" length="50" not-null="true" />
+        </property>
+        <property name="updateTime" type="string">
+            <column name="updateTime" length="50" not-null="true" />
+        </property>
+     </class>
+ </hibernate-mapping>

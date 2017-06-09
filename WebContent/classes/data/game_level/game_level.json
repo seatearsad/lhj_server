@@ -1,0 +1,11 @@
+[
+	{
+		"id":0,
+		"symbol":"symbol_fruits_test",
+		"ui":"ui_1",
+		"line":9,
+		"open_level":0,
+		"max_bet":50,
+		"min_bet":1
+	}
+]
