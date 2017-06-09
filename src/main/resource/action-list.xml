@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aslan-app>
+	<action-map>
+		<action name="1001" bean="playerLoginAction"/>
+		<action name="1002" bean="playerCreateAction"/>
+		<action name="1099" bean="playerHeartBeatAction"/>
+		
+		<action name="2001" bean="gameResultsAction"/>
+	</action-map>
+</aslan-app>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>          
+	<bean name="1001" class="com.wolfroc.slots.message.player.PlayerLoginReq" autowire="byName" singleton="false">
+		<property name="messageId">
+			<value>1001</value>
+		</property>
+	</bean>
+	<bean name="61001" class="com.wolfroc.slots.message.player.PlayerLoginResp" autowire="byName" singleton="false">
+		<property name="messageId">
+			<value>61001</value>
+		</property>
+	</bean>
+	<bean name="1002" class="com.wolfroc.slots.message.player.PlayerCreateReq" autowire="byName" singleton="false">
+		<property name="messageId">
+			<value>1002</value>
+		</property>
+	</bean>
+	<bean name="61002" class="com.wolfroc.slots.message.player.PlayerCreateResp" autowire="byName" singleton="false">
+		<property name="messageId">
+			<value>61002</value>
+		</property>
+	</bean>
+	
+	<bean name="2001" class="com.wolfroc.slots.message.game.GameGetResultReq" autowire="byName" singleton="false">
+		<property name="messageId">
+			<value>2001</value>
+		</property>
+	</bean>
+	<bean name="62001" class="com.wolfroc.slots.message.game.GameGetResultResp" autowire="byName" singleton="false">
+		<property name="messageId">
+			<value>62001</value>
+		</property>
+	</bean>
+</beans>

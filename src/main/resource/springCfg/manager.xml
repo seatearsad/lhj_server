@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>          
+	<bean id="playerManager" class="com.wolfroc.slots.application.player.PlayerManagerImpl" autowire="byName" scope="singleton"></bean>
+	<bean id="overallManager" class="com.wolfroc.slots.application.overall.OverallManagerImpl" autowire="byName" scope="singleton" init-method="start" destroy-method="stop"></bean>
+	<bean id="dataManager" class="com.wolfroc.slots.data.DataManager" autowire="byName" scope="singleton" init-method="init"></bean>
+	<bean id="settleMessage" class="com.wolfroc.slots.message.settleMessage.SettleMessage" autowire="byName" scope="singleton"></bean>
+</beans>
