@@ -21,7 +21,26 @@
 			<value>61002</value>
 		</property>
 	</bean>
-	
+	<bean name="1003" class="com.wolfroc.slots.message.player.PlayerGameLevelLineReq" autowire="byName" singleton="false">
+		<property name="messageId">
+			<value>1003</value>
+		</property>
+	</bean>
+	<bean name="61003" class="com.wolfroc.slots.message.player.PlayerGameLevelLineResp" autowire="byName" singleton="false">
+		<property name="messageId">
+			<value>61003</value>
+		</property>
+	</bean>
+	<bean name="1004" class="com.wolfroc.slots.message.player.PlayerGameLevelBetReq" autowire="byName" singleton="false">
+		<property name="messageId">
+			<value>1004</value>
+		</property>
+	</bean>
+	<bean name="61004" class="com.wolfroc.slots.message.player.PlayerGameLevelBetResp" autowire="byName" singleton="false">
+		<property name="messageId">
+			<value>61004</value>
+		</property>
+	</bean>
 	<bean name="2001" class="com.wolfroc.slots.message.game.GameGetResultReq" autowire="byName" singleton="false">
 		<property name="messageId">
 			<value>2001</value>

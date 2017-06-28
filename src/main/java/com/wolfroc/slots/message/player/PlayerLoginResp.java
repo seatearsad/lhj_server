@@ -13,12 +13,19 @@ import com.wolfroc.slots.message.ResponseMessage;
 
 public class PlayerLoginResp extends ResponseMessage{
 	private PlayerInfo info = null;
+	private String loginKey;
 	private boolean isP;
 	public PlayerInfo getInfo() {
 		return info;
 	}
 	public void setInfo(PlayerInfo info) {
 		this.info = info;
+	}
+	public String getLoginKey() {
+		return loginKey;
+	}
+	public void setLoginKey(String loginKey) {
+		this.loginKey = loginKey;
 	}
 	public boolean isP() {
 		return isP;

@@ -7,8 +7,13 @@
 
 package com.wolfroc.slots.system.impl;
 
+import java.util.Map;
+
 import com.wolfroc.slots.application.player.PlayerManager;
+import com.wolfroc.slots.application.player.info.PlayerFreeTimes;
 import com.wolfroc.slots.application.player.info.PlayerInfo;
+import com.wolfroc.slots.application.player.info.PlayerLevelBet;
+import com.wolfroc.slots.application.player.info.PlayerLevelLine;
 import com.wolfroc.slots.system.PlayerSystem;
 
 public class PlayerSystemImpl implements PlayerSystem{
@@ -30,6 +35,21 @@ public class PlayerSystemImpl implements PlayerSystem{
 		return playerInfo;
 	}
 	@Override
+	public PlayerInfo updateFreeTimes(int gameLevelId,int times, PlayerInfo playerInfo)
+			throws Exception {
+		Map<Integer, PlayerFreeTimes> freeTimeMap = playerInfo.getFree_times();
+		PlayerFreeTimes freeTimes = freeTimeMap.get(gameLevelId);
+		if (freeTimes == null) {
+			freeTimes = new PlayerFreeTimes();
+			freeTimes.setLevel(gameLevelId);
+		}
+		
+		freeTimes.setFree(freeTimes.getFree() + times);
+		
+		playerManager.updatePlayerInfo(playerInfo);
+		return playerInfo;
+	}
+	@Override
 	public PlayerInfo updatePlayerInfoByGameResult(long playerId,
 			int betAmount, int payAmount, boolean isWin, boolean isFree)
 			throws Exception {
@@ -46,11 +66,38 @@ public class PlayerSystemImpl implements PlayerSystem{
 		playerManager.updatePlayerInfo(playerInfo);
 		return playerInfo;
 	}
+	@Override
+	public PlayerInfo changeGameLevelLine(long playerId, int gameLevelId, int line)
+			throws Exception {
+		PlayerInfo playerInfo = getPlayerInfoByPlayerId(playerId);
+		Map<Integer, PlayerLevelLine> level_line = playerInfo.getLevel_line();
+		PlayerLevelLine levelLine = level_line.get(gameLevelId);
+		levelLine.setLine(line);
+		
+		level_line.put(gameLevelId, levelLine);
+		
+		playerManager.updatePlayerInfo(playerInfo);
+		
+		return playerInfo;
+	}
+	@Override
+	public PlayerInfo changeGameLevelBet(long playerId, int gameLevelId, int bet)
+			throws Exception {
+		PlayerInfo playerInfo = getPlayerInfoByPlayerId(playerId);
+		Map<Integer, PlayerLevelBet> betMap = playerInfo.getLevel_bet();
+		PlayerLevelBet levelBet = betMap.get(gameLevelId);
+		levelBet.setBet(bet);
+		
+		betMap.put(gameLevelId, levelBet);
+		
+		playerManager.updatePlayerInfo(playerInfo);
+		
+		return playerInfo;
+	}
 	public PlayerManager getPlayerManager() {
 		return playerManager;
 	}
 	public void setPlayerManager(PlayerManager playerManager) {
 		this.playerManager = playerManager;
 	}
-	
 }

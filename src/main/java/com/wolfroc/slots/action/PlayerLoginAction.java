@@ -7,6 +7,7 @@
 
 package com.wolfroc.slots.action;
 
+import com.wolfroc.slots.Util.DateTime;
 import com.wolfroc.slots.application.player.info.PlayerInfo;
 import com.wolfroc.slots.message.RequestMessage;
 import com.wolfroc.slots.message.ResponseMessage;
@@ -29,8 +30,11 @@ public class PlayerLoginAction extends Action{
 			resp.setP(false);
 		}else{
 			resp.setP(true);
+			String today = DateTime.getDateTimeString();
+			playerInfo.setLoginTime(today);
+			playerInfo.setLoginKey();
+			resp.setLoginKey(playerInfo.getLoginKey());
 		}
-		
 		
 		return resp.getData();
 	}

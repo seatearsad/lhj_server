@@ -94,7 +94,7 @@
 		"type":2,
 		"name":"Scatter",
 		"icon":"image/ii.png",
-		"weight":[3,3,2,3,2],
+		"weight":[5,5,5,5,5],
 		"repeat":1,
 		"reward":[{"num":3,"mult":5},{"num":4,"mult":10},{"num":5,"mult":20}]
 	},

@@ -29,6 +29,8 @@ public class GameLevelInfo {
 	private String ui;
 	private int line;
 	private int open_level;
+	private int max_bet;
+	private int min_bet;
 	private int scatterId;
 	private int wildId;
 	public int getId() {
@@ -84,6 +86,18 @@ public class GameLevelInfo {
 	}
 	public void setOpen_level(int open_level) {
 		this.open_level = open_level;
+	}
+	public int getMax_bet() {
+		return max_bet;
+	}
+	public void setMax_bet(int max_bet) {
+		this.max_bet = max_bet;
+	}
+	public int getMin_bet() {
+		return min_bet;
+	}
+	public void setMin_bet(int min_bet) {
+		this.min_bet = min_bet;
 	}
 	public int getScatterId() {
 		return scatterId;

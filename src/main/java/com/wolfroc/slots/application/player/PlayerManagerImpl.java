@@ -65,7 +65,10 @@ public class PlayerManagerImpl implements PlayerManager{
 	}
 	@Override
 	public PlayerInfo updatePlayerInfo(PlayerInfo playerInfo) throws Exception {
+		String thisTime = DateTime.getDateTimeString();
+		playerInfo.setUpdateTime(thisTime);
 		PlayerPojo pojo = setPlayerPojoFromPlayerInfo(playerInfo);
+		
 		playerDao.updatePlayer(pojo);
 		
 		return playerInfo;

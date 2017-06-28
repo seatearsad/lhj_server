@@ -34,9 +34,17 @@ public class GameCalculationSystemImpl implements GameCalculationSystem{
 	private PlayerSystem playerSystem;
 	
 	//下注倍数
-	int betMult = 1;
+	private int betMult = 1;
 	//赔付倍数
-	int payMult = 0;
+	private int payMult = 0;
+	
+	//下注线数
+	private int betLine = 0;
+	
+	private PlayerInfo playerInfo;
+	
+	//关卡ID之后传输过来
+	private int gameLevelId = 0;
 	
 	public GameCalculationSystemImpl() {
 		logger.info("New GameCalculationSystemImpl!");
@@ -45,8 +53,10 @@ public class GameCalculationSystemImpl implements GameCalculationSystem{
 	public GameResult getGameResult(long playerId) throws Exception {
 		GameResult result = new GameResult();
 		
-		//关卡ID之后传输过来
-		int gameLevelId = 0;
+		playerInfo = playerSystem.getPlayerInfoByPlayerId(playerId);
+		//取当前关卡的线数及下注数
+		betMult = playerInfo.getLevel_bet().get(gameLevelId).getBet();
+		betLine = playerInfo.getLevel_line().get(gameLevelId).getLine();
 		
 		GameLevelInfo gameLevelInfo = dataManager.getGameLevelInfo(gameLevelId);
 		List<List<Integer>> reelList = initReelSort(gameLevelInfo);
@@ -54,12 +64,14 @@ public class GameCalculationSystemImpl implements GameCalculationSystem{
 		PlayerInfo playerInfo = playerSystem.getPlayerInfoByPlayerId(playerId);
 		
 		//下注金额
-		int betAmount = betMult * gameLevelInfo.getLine();
+		int betAmount = betMult * betLine;
 		
 		//是否有免费次数
 		if (playerInfo.getFree_times().get(gameLevelId).getFree() > 0) {
 			result.setFree(true);
 			betAmount = 0;
+			//更新免费次数
+			playerSystem.updateFreeTimes(gameLevelId, -1, playerInfo);
 		}
 		
 		//判断用户是否有足够的金额进行游戏
@@ -70,6 +82,12 @@ public class GameCalculationSystemImpl implements GameCalculationSystem{
 			
 			if (lineList.size() > 0) {
 				result.setWin(true);
+			}
+			//免费旋转中奖
+			for(WinLineInfo info : lineList){
+				if (info.getLineId() == -1) {
+					result.setWinFree(true);
+				}
 			}
 			
 			result.setLineList(lineList);
@@ -221,7 +239,7 @@ public class GameCalculationSystemImpl implements GameCalculationSystem{
 	}
 	private List<WinLineInfo> checkLine(List<List<Integer>> showReel,GameLevelInfo gameLevelInfo){
 		List<WinLineInfo> lineList = new ArrayList<WinLineInfo>();
-		List<LineInfo> lineInfos = dataManager.getLineMap(gameLevelInfo.getLine());
+		List<LineInfo> lineInfos = dataManager.getLineMap(betLine);
 		//处理分散符 lineNum = -1
 		int scatNum = 0;
 		for(List<Integer> list : showReel){
@@ -293,6 +311,13 @@ public class GameCalculationSystemImpl implements GameCalculationSystem{
 				
 				if (lineId != -1) {
 					payMult += reward.getMult();
+				}else{//记录免费旋转的次数
+					try {
+						playerSystem.updateFreeTimes(gameLevelId,reward.getMult(),playerInfo);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 		}

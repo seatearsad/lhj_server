@@ -3,6 +3,8 @@
 <beans>
 	<bean name="playerLoginAction" class="com.wolfroc.slots.action.PlayerLoginAction" singleton="false" autowire="byName"/>
 	<bean name="playerCreateAction" class="com.wolfroc.slots.action.PlayerCreateAction" singleton="false" autowire="byName"/>
+	<bean name="playerGameLevelLineAction" class="com.wolfroc.slots.action.PlayerGameLevelLineAction" singleton="false" autowire="byName"/>
+	<bean name="playerGameLevelBetAction" class="com.wolfroc.slots.action.PlayerGameLevelBetAction" singleton="false" autowire="byName"/>
 	<bean name="gameResultsAction" class="com.wolfroc.slots.action.GameResultsAction" singleton="false" autowire="byName"/>
 	
 </beans>

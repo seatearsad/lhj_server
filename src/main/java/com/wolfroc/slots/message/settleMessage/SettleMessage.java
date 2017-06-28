@@ -17,6 +17,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import com.wolfroc.slots.Util.JsonManager;
+import com.wolfroc.slots.Util.MD5;
+import com.wolfroc.slots.application.player.info.PlayerInfo;
+import com.wolfroc.slots.config.CoreConfig;
 import com.wolfroc.slots.config.Language;
 import com.wolfroc.slots.message.RequestMessage;
 import com.wolfroc.slots.message.ResponseMessage;
@@ -24,11 +27,12 @@ import com.wolfroc.slots.message.ResultCode;
 import com.wolfroc.slots.message.error.CommonErrorResp;
 import com.wolfroc.slots.servlet.main.ActionDispatcher;
 import com.wolfroc.slots.servlet.main.AppContext;
+import com.wolfroc.slots.system.PlayerSystem;
 
 
 public class SettleMessage{
 	private Logger logger = Logger.getLogger(getClass());
-//	private PlayerSystem playerSystem;
+	private PlayerSystem playerSystem;
 
 	public SettleMessage(){
 		logger.info("settleMessage");
@@ -47,6 +51,8 @@ public class SettleMessage{
 		String remoteAddr = "";
 		String url = "";
 		String sign = "";
+		
+		String secretKey = CoreConfig.getInstance().getConfig("secretKey");
 		
 		try {
 			remoteAddr = request.getRemoteAddr();
@@ -74,9 +80,12 @@ public class SettleMessage{
 			str.append("remoteAddr=").append(remoteAddr).append("&");
 			str.append("url=").append(url);
 			
+//			System.out.println(messageId + playerId + serverId + data + secretKey);
+			//验证签字
+			String checkSign = MD5.MD5Encode(messageId + playerId + serverId + data + secretKey);
 			logger.info("==Request:" + str.toString() + "==");
 			RequestMessage requestMessage = getRequestMessage(messageId,pId,sId,data);
-			if(requestMessage == null){
+			if(requestMessage == null || !sign.equals(checkSign)){
 				return new CommonErrorResp(Language.getInstance().getConfig("messageError"),ResultCode.seriousErrorCode).getData();
 			}
 			
@@ -112,19 +121,19 @@ public class SettleMessage{
 	private boolean checkLoginKey(RequestMessage requestMessage){
 		String loginKey = requestMessage.getLoginKey();
 		if (requestMessage.getMessageId() != 1001 && requestMessage.getMessageId() != 1002) {
-//			PlayerBaseInfo playerBaseInfo = null;
-//			try {
-//				playerBaseInfo = playerSystem.getPlayerBaseInfoByPlayerId(requestMessage.getPlayerId());
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//			if (playerBaseInfo == null) {
-//				return false;
-//			}
-//			if (playerBaseInfo.getLoginKey() == null || !playerBaseInfo.getLoginKey().equals(loginKey)) {
-//				return false;
-//			}
-			//重新加载缓存
+			PlayerInfo playerBaseInfo = null;
+			try {
+				playerBaseInfo = playerSystem.getPlayerInfoByPlayerId(requestMessage.getPlayerId());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			if (playerBaseInfo == null) {
+				return false;
+			}
+			if (playerBaseInfo.getLoginKey() == null || !playerBaseInfo.getLoginKey().equals(loginKey)) {
+				return false;
+			}
+//			重新加载缓存
 //			if (playerBaseInfo.isClear()) {
 //				try {
 //					logger.info("loadCache:" + playerBaseInfo.getName());
@@ -137,11 +146,11 @@ public class SettleMessage{
 		
 		return true;
 	}
-//	public PlayerSystem getPlayerSystem() {
-//		return playerSystem;
-//	}
-//
-//	public void setPlayerSystem(PlayerSystem playerSystem) {
-//		this.playerSystem = playerSystem;
-//	}
+	public PlayerSystem getPlayerSystem() {
+		return playerSystem;
+	}
+
+	public void setPlayerSystem(PlayerSystem playerSystem) {
+		this.playerSystem = playerSystem;
+	}
 }

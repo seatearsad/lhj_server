@@ -1,41 +1,33 @@
 /**
  * Copyright (c) 2013-2014 by WolfRoc Inc. 
  * @author Create by Garfunkel
- * @Date 2017-6-3
+ * @Date 2017-6-20
  * @Description 
  */
 
 package com.wolfroc.slots.action;
 
-import com.wolfroc.slots.Util.DateTime;
 import com.wolfroc.slots.application.player.info.PlayerInfo;
 import com.wolfroc.slots.message.RequestMessage;
 import com.wolfroc.slots.message.ResponseMessage;
-import com.wolfroc.slots.message.player.PlayerCreateReq;
-import com.wolfroc.slots.message.player.PlayerCreateResp;
+import com.wolfroc.slots.message.player.PlayerGameLevelLineReq;
+import com.wolfroc.slots.message.player.PlayerGameLevelLineResp;
 import com.wolfroc.slots.system.PlayerSystem;
 
-public class PlayerCreateAction extends Action{
+public class PlayerGameLevelLineAction extends Action{
 	private PlayerSystem playerSystem;
 	@Override
 	public String init(RequestMessage requestMessage,
 			ResponseMessage responseMessage) throws Exception {
-		PlayerCreateReq req = (PlayerCreateReq)requestMessage;
-		int userId = req.getUserId();
+		PlayerGameLevelLineReq req = (PlayerGameLevelLineReq)requestMessage;
+		long playerId = req.getPlayerId();
+		int gameLevelId = req.getLevelId();
+		int line = req.getLine();
 		
-		PlayerInfo playerInfo = playerSystem.getPlayerInfoByUserId(userId);
-		if (playerInfo == null) {
-			playerInfo = playerSystem.createPlayerByUserId(userId);
-			String today = DateTime.getDateTimeString();
-			playerInfo.setLoginTime(today);
-			playerInfo.setLoginKey();
-		}else{
-			
-		}
+		PlayerInfo playerInfo = playerSystem.changeGameLevelLine(playerId,gameLevelId,line);
 		
-		PlayerCreateResp resp = (PlayerCreateResp)responseMessage;
+		PlayerGameLevelLineResp resp = (PlayerGameLevelLineResp)responseMessage;
 		resp.setInfo(playerInfo);
-		
 		return resp.getData();
 	}
 	public PlayerSystem getPlayerSystem() {
@@ -44,5 +36,4 @@ public class PlayerCreateAction extends Action{
 	public void setPlayerSystem(PlayerSystem playerSystem) {
 		this.playerSystem = playerSystem;
 	}
-
 }
