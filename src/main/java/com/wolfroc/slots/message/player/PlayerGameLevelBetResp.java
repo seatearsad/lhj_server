@@ -12,6 +12,7 @@ import com.wolfroc.slots.message.ResponseMessage;
 
 public class PlayerGameLevelBetResp extends ResponseMessage{
 	private PlayerInfo info;
+	private boolean isAllow;
 
 	public PlayerInfo getInfo() {
 		return info;
@@ -19,6 +20,14 @@ public class PlayerGameLevelBetResp extends ResponseMessage{
 
 	public void setInfo(PlayerInfo info) {
 		this.info = info;
+	}
+
+	public boolean isAllow() {
+		return isAllow;
+	}
+
+	public void setAllow(boolean isAllow) {
+		this.isAllow = isAllow;
 	}
 
 }

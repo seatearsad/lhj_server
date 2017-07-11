@@ -4,79 +4,79 @@
 		"type":0,
 		"name":"BAR",
 		"icon":"image/ii.png",
-		"weight":[1,2,3,1,2],
+		"weight":[2,3,3,2,1],
 		"repeat":1,
 		"reward":[{"num":2,"mult":5},{"num":3,"mult":50},{"num":4,"mult":250},{"num":5,"mult":1000}]
 	},
 	{
 		"id":1,
 		"type":0,
-		"name":"Õº±Í7",
+		"name":"ÂõæÊ†á7",
 		"icon":"image/ii.png",
-		"weight":[5,3,5,3,2],
+		"weight":[4,3,4,3,2],
 		"repeat":1,
 		"reward":[{"num":2,"mult":4},{"num":3,"mult":40},{"num":4,"mult":200},{"num":5,"mult":500}]
 	},
 	{
 		"id":2,
 		"type":0,
-		"name":"¡ÂÓı",
+		"name":"ÈìÉÈìõ",
 		"icon":"image/ii.png",
-		"weight":[8,7,5,8,3],
+		"weight":[5,5,5,5,4],
 		"repeat":1,
 		"reward":[{"num":2,"mult":3},{"num":3,"mult":30},{"num":4,"mult":150},{"num":5,"mult":300}]
 	},
 	{
 		"id":3,
 		"type":0,
-		"name":"”£Ã“",
+		"name":"Ê®±Ê°É",
 		"icon":"image/ii.png",
-		"weight":[7,10,9,6,4],
+		"weight":[9,7,7,8,5],
 		"repeat":1,
 		"reward":[{"num":2,"mult":3},{"num":3,"mult":25},{"num":4,"mult":100},{"num":5,"mult":200}]
 	},
 	{
 		"id":4,
 		"type":0,
-		"name":"Œ˜πœ",
+		"name":"Ë•øÁìú",
 		"icon":"image/ii.png",
-		"weight":[9,7,8,8,5],
+		"weight":[9,9,8,8,6],
 		"repeat":1,
 		"reward":[{"num":3,"mult":20},{"num":4,"mult":75},{"num":5,"mult":150}]
 	},
 	{
 		"id":5,
 		"type":0,
-		"name":"∆œÃ—",
+		"name":"Ëë°ËêÑ",
 		"icon":"image/ii.png",
-		"weight":[8,8,9,9,8],
+		"weight":[10,9,9,8,7],
 		"repeat":1,
 		"reward":[{"num":3,"mult":15},{"num":4,"mult":50},{"num":5,"mult":100}]
 	},
 	{
 		"id":6,
 		"type":0,
-		"name":"≥»◊”",
+		"name":"Ê©ôÂ≠ê",
 		"icon":"image/ii.png",
-		"weight":[9,8,7,7,7],
+		"weight":[10,10,9,8,7],
 		"repeat":1,
 		"reward":[{"num":3,"mult":10},{"num":4,"mult":30},{"num":5,"mult":80}]
 	},
 	{
 		"id":7,
 		"type":0,
-		"name":"—º¿Ê",
+		"name":"È∏≠Ê¢®",
 		"icon":"image/ii.png",
-		"weight":[9,9,8,9,8],
+		"weight":[11,11,10,9,9],
 		"repeat":1,
 		"reward":[{"num":3,"mult":5},{"num":4,"mult":20},{"num":5,"mult":60}]
 	},
 	{
 		"id":8,
 		"type":0,
-		"name":"∆ªπ˚",
+		"name":"ËãπÊûú",
 		"icon":"image/ii.png",
-		"weight":[10,7,7,6,6],
+		"weight":[10,12,10,9,9],
 		"repeat":1,
 		"reward":[{"num":3,"mult":4},{"num":4,"mult":15},{"num":5,"mult":50}]
 	},
@@ -94,7 +94,7 @@
 		"type":2,
 		"name":"Scatter",
 		"icon":"image/ii.png",
-		"weight":[3,3,2,3,2],
+		"weight":[3,3,2,2,2],
 		"repeat":1,
 		"reward":[{"num":3,"mult":5},{"num":4,"mult":10},{"num":5,"mult":20}]
 	},
@@ -103,7 +103,7 @@
 		"type":1,
 		"name":"WILD",
 		"icon":"image/ii.png",
-		"weight":[5,5,6,4,2],
+		"weight":[3,2,2,2,2],
 		"repeat":1,
 		"reward":[{"num":2,"mult":10},{"num":3,"mult":100},{"num":4,"mult":200},{"num":5,"mult":500}]
 	}

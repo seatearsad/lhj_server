@@ -14,59 +14,60 @@ import com.wolfroc.slots.data.symbol.SymbolInfo;
 
 public class GameLevelInfo {
 	private int id;
-	private String symbol;
-	private List<SymbolInfo> symbolInfo;
+	private List<String> symbol;
+	private Map<String,List<SymbolInfo>> symbolInfo;
 	/*
 	 * 所有符号的总数量，所有卷轴
 	 */
-	private int symbolNum;
+	private Map<String, Integer> symbolNum;
 	/*
 	 * 单列卷轴上的符号及数量
 	 */
-	private List<Map<Integer, ReelInfo>> reelList;
+	private Map<String, List<Map<Integer, ReelInfo>>> reelList;
 	//单列卷轴的符号单个排列
-	List<List<Integer>> reelSymbolIdList;
+	private Map<String, List<List<Integer>>> reelSymbolIdList;
 	private String ui;
 	private int line;
 	private int open_level;
-	private int max_bet;
-	private int min_bet;
+	private List<Integer> bet;
 	private int scatterId;
 	private int wildId;
+	private int bonusId;
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getSymbol() {
+	public List<String> getSymbol() {
 		return symbol;
 	}
-	public void setSymbol(String symbol) {
+	public void setSymbol(List<String> symbol) {
 		this.symbol = symbol;
 	}
-	public List<SymbolInfo> getSymbolInfo() {
+	public Map<String, List<SymbolInfo>> getSymbolInfo() {
 		return symbolInfo;
 	}
-	public void setSymbolInfo(List<SymbolInfo> symbolInfo) {
+	public void setSymbolInfo(Map<String, List<SymbolInfo>> symbolInfo) {
 		this.symbolInfo = symbolInfo;
 	}
-	public int getSymbolNum() {
+	public Map<String, Integer> getSymbolNum() {
 		return symbolNum;
 	}
-	public void setSymbolNum(int symbolNum) {
+	public void setSymbolNum(Map<String, Integer> symbolNum) {
 		this.symbolNum = symbolNum;
 	}
-	public List<Map<Integer, ReelInfo>> getReelList() {
+	public Map<String, List<Map<Integer, ReelInfo>>> getReelList() {
 		return reelList;
 	}
-	public void setReelList(List<Map<Integer, ReelInfo>> reelList) {
+	public void setReelList(Map<String, List<Map<Integer, ReelInfo>>> reelList) {
 		this.reelList = reelList;
 	}
-	public List<List<Integer>> getReelSymbolIdList() {
+	public Map<String, List<List<Integer>>> getReelSymbolIdList() {
 		return reelSymbolIdList;
 	}
-	public void setReelSymbolIdList(List<List<Integer>> reelSymbolIdList) {
+	public void setReelSymbolIdList(
+			Map<String, List<List<Integer>>> reelSymbolIdList) {
 		this.reelSymbolIdList = reelSymbolIdList;
 	}
 	public String getUi() {
@@ -87,17 +88,11 @@ public class GameLevelInfo {
 	public void setOpen_level(int open_level) {
 		this.open_level = open_level;
 	}
-	public int getMax_bet() {
-		return max_bet;
+	public List<Integer> getBet() {
+		return bet;
 	}
-	public void setMax_bet(int max_bet) {
-		this.max_bet = max_bet;
-	}
-	public int getMin_bet() {
-		return min_bet;
-	}
-	public void setMin_bet(int min_bet) {
-		this.min_bet = min_bet;
+	public void setBet(List<Integer> bet) {
+		this.bet = bet;
 	}
 	public int getScatterId() {
 		return scatterId;
@@ -110,5 +105,11 @@ public class GameLevelInfo {
 	}
 	public void setWildId(int wildId) {
 		this.wildId = wildId;
+	}
+	public int getBonusId() {
+		return bonusId;
+	}
+	public void setBonusId(int bonusId) {
+		this.bonusId = bonusId;
 	}
 }

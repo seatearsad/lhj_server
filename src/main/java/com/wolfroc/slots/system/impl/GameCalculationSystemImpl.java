@@ -24,6 +24,7 @@ import com.wolfroc.slots.data.symbol.SymbolInfo;
 import com.wolfroc.slots.data.symbol.SymbolReward;
 import com.wolfroc.slots.object.game.GameResult;
 import com.wolfroc.slots.object.game.WinLineInfo;
+import com.wolfroc.slots.pojo.OverallPojo;
 import com.wolfroc.slots.system.GameCalculationSystem;
 import com.wolfroc.slots.system.PlayerSystem;
 
@@ -59,7 +60,7 @@ public class GameCalculationSystemImpl implements GameCalculationSystem{
 		betLine = playerInfo.getLevel_line().get(gameLevelId).getLine();
 		
 		GameLevelInfo gameLevelInfo = dataManager.getGameLevelInfo(gameLevelId);
-		List<List<Integer>> reelList = initReelSort(gameLevelInfo);
+		
 		//获取用户信息
 		PlayerInfo playerInfo = playerSystem.getPlayerInfoByPlayerId(playerId);
 		
@@ -75,7 +76,9 @@ public class GameCalculationSystemImpl implements GameCalculationSystem{
 		}
 		
 		//判断用户是否有足够的金额进行游戏
-		if (playerInfo.getCurr_amount() > betAmount) {
+		if (playerInfo.getCurr_amount() >= betAmount) {
+			//获取使用卷轴-通过当前的下注，以及全局和用户状态
+			List<List<Integer>> reelList = initReelSort(gameLevelInfo,playerInfo,betAmount);
 			//取选中符号 列数->位置
 			List<List<Integer>> showReel = getSelectSymbol(reelList);
 			List<WinLineInfo> lineList = checkLine(showReel,gameLevelInfo);
@@ -111,9 +114,33 @@ public class GameCalculationSystemImpl implements GameCalculationSystem{
 		return result;
 	}
 	//初始化卷轴 符号的排序
-	private List<List<Integer>> initReelSort(GameLevelInfo gameLevelInfo){
-		List<Map<Integer, ReelInfo>> reelList = gameLevelInfo.getReelList();
-		List<List<Integer>> reelSymbolIdList = gameLevelInfo.getReelSymbolIdList();
+	private List<List<Integer>> initReelSort(GameLevelInfo gameLevelInfo,PlayerInfo playerInfo,int betAmount) throws Exception{
+		//概率编号
+		int serialNum = 0;
+		//获取全局信息
+		OverallPojo overall = overallManager.getOverallPojo();
+		//获取比例map
+		Map<Integer, List<Integer>> ratioMap = dataManager.getRatioMap();
+		
+		if(overall.getCurr_win_amount() >= 0 && betAmount > 0){//当全局属于盈利的状态是才进行高回报率选择，否则使用最低回报率
+			int ratioNum = (int) Math.floor(overall.getCurr_win_amount() / betAmount);
+			int baseNum = 0;
+			for(Integer ratio : ratioMap.keySet()){
+				if(ratioNum >= baseNum && ratioNum < ratio){
+					List<Integer> currList = ratioMap.get(ratio);
+					//获取概率编号
+					serialNum = getSerialNum(currList);
+					break;
+				}else{
+					baseNum = ratio;
+				}
+			}
+		}
+		
+		String symbolName = gameLevelInfo.getSymbol().get(serialNum);
+		System.out.println("symbolName:" + symbolName);
+		List<Map<Integer, ReelInfo>> reelList = gameLevelInfo.getReelList().get(symbolName);
+		List<List<Integer>> reelSymbolIdList = gameLevelInfo.getReelSymbolIdList().get(symbolName);
 		List<List<Integer>> list = new ArrayList<List<Integer>>();
 		
 		List<Integer> currReel;//当前卷轴
@@ -154,6 +181,20 @@ public class GameCalculationSystemImpl implements GameCalculationSystem{
 //		}
 		
 		return reelSymbolIdList;
+	}
+	private int getSerialNum(List<Integer> list){
+		int num = 0;
+		int base = 0;
+		int randomNum = getRandomNum(null, 100);
+		for(int i=0;i<list.size();++i){
+			if(randomNum >= base && randomNum < base + list.get(i)){
+				num = i;
+				break;
+			}else{
+				base = base + list.get(i);
+			}
+		}
+		return num;
 	}
 	private int getRandomNum(List<Integer> recordNum,int allNum){
 		Random random = new Random();
@@ -269,23 +310,35 @@ public class GameCalculationSystemImpl implements GameCalculationSystem{
 				}
 			}
 			lineList = addWinLineInfoList(firstId, totalNum, lineList,gameLevelInfo,lineInfo.getId());
-			//先取连续数
-			totalNum = 1;
+			//先取连续数--不包含Bonus
+			if(firstId != gameLevelInfo.getBonusId()){
+				totalNum = 1;
+				for (int j = 1; j < include.size(); ++j) {
+					int currId = showReel.get(j).get(include.get(j));
+					//处理首个图标为wild
+					if(firstId == gameLevelInfo.getWildId()){
+						firstId = currId;
+					}
+					//当前id 不是首个符号id 并且不是野蛮符 跳出
+					if (currId != firstId && currId != gameLevelInfo.getWildId()) {
+						break;
+					}else{
+						totalNum++;
+					}
+				}
+				
+				lineList = addWinLineInfoList(firstId, totalNum, lineList,gameLevelInfo,lineInfo.getId());
+			}
+			//计算Bonus--
+			totalNum = 0;
 			for (int j = 1; j < include.size(); ++j) {
 				int currId = showReel.get(j).get(include.get(j));
 				//处理首个图标为wild
-				if(firstId == gameLevelInfo.getWildId()){
-					firstId = currId;
-				}
-				//当前id 不是首个符号id 并且不是野蛮符 跳出
-				if (currId != firstId && currId != gameLevelInfo.getWildId()) {
-					break;
-				}else{
+				if(currId == gameLevelInfo.getBonusId()){
 					totalNum++;
 				}
+				lineList = addWinLineInfoList(gameLevelInfo.getBonusId(), totalNum, lineList,gameLevelInfo,lineInfo.getId());
 			}
-			
-			lineList = addWinLineInfoList(firstId, totalNum, lineList,gameLevelInfo,lineInfo.getId());
 			
 			//处理前面全部都是野蛮符号的
 //			if(firstId == gameLevelInfo.getWildId()){
@@ -298,7 +351,9 @@ public class GameCalculationSystemImpl implements GameCalculationSystem{
 		return lineList;
 	}
 	private List<WinLineInfo> addWinLineInfoList(int firstId,int totalNum,List<WinLineInfo> lineList,GameLevelInfo gameLevelInfo,int lineId){
-		SymbolInfo symbolInfo = gameLevelInfo.getSymbolInfo().get(firstId);
+		//取第一概率的图标信息，因为都是一样的
+		String symbolName = gameLevelInfo.getSymbol().get(0);
+		SymbolInfo symbolInfo = gameLevelInfo.getSymbolInfo().get(symbolName).get(firstId);
 		List<SymbolReward> rewardList = symbolInfo.getReward();
 		for(SymbolReward reward : rewardList){
 			if(totalNum == reward.getNum()){
@@ -306,10 +361,16 @@ public class GameCalculationSystemImpl implements GameCalculationSystem{
 				winLineInfo.setLineId(lineId);
 				winLineInfo.setSymbolId(firstId);
 				winLineInfo.setNum(totalNum);
-				System.out.println("line:" + winLineInfo.getLineId() + ",symbolId:" + winLineInfo.getSymbolId() + ",num:" + winLineInfo.getNum());
-				lineList.add(winLineInfo);
+				//如果是Bonus标记一下
+				if(firstId == gameLevelInfo.getBonusId())
+					winLineInfo.setIsBonus(1);
+				else
+					winLineInfo.setIsBonus(0);
 				
-				if (lineId != -1) {
+				System.out.println("line:" + winLineInfo.getLineId() + ",symbolId:" + winLineInfo.getSymbolId() + ",num:" + winLineInfo.getNum() + "IsBonus:" + winLineInfo.getIsBonus());
+				lineList.add(winLineInfo);
+				//过滤scatter和Bonus
+				if (lineId != -1 && winLineInfo.getIsBonus() != 1) {
 					payMult += reward.getMult();
 				}else{//记录免费旋转的次数
 					try {

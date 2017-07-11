@@ -22,6 +22,7 @@ public class PlayerCreateAction extends Action{
 			ResponseMessage responseMessage) throws Exception {
 		PlayerCreateReq req = (PlayerCreateReq)requestMessage;
 		int userId = req.getUserId();
+		PlayerCreateResp resp = (PlayerCreateResp)responseMessage;
 		
 		PlayerInfo playerInfo = playerSystem.getPlayerInfoByUserId(userId);
 		if (playerInfo == null) {
@@ -29,11 +30,12 @@ public class PlayerCreateAction extends Action{
 			String today = DateTime.getDateTimeString();
 			playerInfo.setLoginTime(today);
 			playerInfo.setLoginKey();
+			
+			resp.setLoginKey(playerInfo.getLoginKey());
 		}else{
 			
 		}
 		
-		PlayerCreateResp resp = (PlayerCreateResp)responseMessage;
 		resp.setInfo(playerInfo);
 		
 		return resp.getData();

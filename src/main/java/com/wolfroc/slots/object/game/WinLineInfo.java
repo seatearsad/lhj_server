@@ -11,6 +11,7 @@ public class WinLineInfo {
 	private int lineId;
 	private int symbolId;
 	private int num;
+	private int isBonus;
 	public int getLineId() {
 		return lineId;
 	}
@@ -28,5 +29,11 @@ public class WinLineInfo {
 	}
 	public void setNum(int num) {
 		this.num = num;
+	}
+	public int getIsBonus() {
+		return isBonus;
+	}
+	public void setIsBonus(int isBonus) {
+		this.isBonus = isBonus;
 	}
 }

@@ -9,7 +9,8 @@ package com.wolfroc.slots.system.impl;
 
 import org.apache.log4j.Logger;
 
-import com.wolfroc.slots.application.player.info.PlayerInfo;
+import com.wolfroc.slots.data.DataManager;
+import com.wolfroc.slots.data.game_level.GameLevelInfo;
 import com.wolfroc.slots.object.game.GameResult;
 import com.wolfroc.slots.servlet.main.AppContext;
 import com.wolfroc.slots.system.GameCalculationSystem;
@@ -17,6 +18,7 @@ import com.wolfroc.slots.system.GameSystem;
 
 public class GameSystemImpl implements GameSystem{
 	private Logger logger = Logger.getLogger(getClass());
+	private DataManager dataManager;
 	public GameSystemImpl() {
 		logger.info("GameSystemImpl");
 	}
@@ -26,5 +28,28 @@ public class GameSystemImpl implements GameSystem{
 		GameResult result = gameCalculationSystem.getGameResult(playerId);
 		return result;
 	}
-
+	@Override
+	public boolean checkBetIsAllow(int gameLevel, int bet) throws Exception {
+		GameLevelInfo gameLevelInfo = dataManager.getGameLevelInfo(gameLevel);
+		boolean isAllow = false;
+		if (gameLevelInfo.getBet().contains(bet)) {
+			isAllow = true;
+		}
+		return isAllow;
+	}
+	@Override
+	public boolean checkLineIsAllow(int gameLevel, int line) throws Exception {
+		GameLevelInfo gameLevelInfo = dataManager.getGameLevelInfo(gameLevel);
+		boolean isAllow = false;
+		if(gameLevelInfo.getLine()>= line){
+			isAllow = true;
+		}
+		return isAllow;
+	}
+	public DataManager getDataManager() {
+		return dataManager;
+	}
+	public void setDataManager(DataManager dataManager) {
+		this.dataManager = dataManager;
+	}
 }

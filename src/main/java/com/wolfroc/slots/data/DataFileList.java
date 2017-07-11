@@ -15,4 +15,5 @@ public class DataFileList {
 	public static final String lineFile = root + "data/line/line.json";
 	public static final String gameLevelFile = root + "data/game_level/game_level.json";
 	public static final String symbol_1 = root + "data/symbol/symbol_1.json";
+	public static final String ratioFile = root + "data/game_level/ratio.json";
 }
