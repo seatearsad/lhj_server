@@ -3,8 +3,11 @@
 	<action-map>
 		<action name="1001" bean="playerLoginAction"/>
 		<action name="1002" bean="playerCreateAction"/>
+		<action name="1003" bean="playerGameLevelLineAction"/>
+		<action name="1004" bean="playerGameLevelBetAction"/>
 		<action name="1099" bean="playerHeartBeatAction"/>
 		
 		<action name="2001" bean="gameResultsAction"/>
+		<action name="2002" bean="gameDiceResultsAction"/>
 	</action-map>
 </aslan-app>

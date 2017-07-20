@@ -1,0 +1,14 @@
+[
+	{
+		"level":1,
+		"nextExp":900,
+		"openLevel":[0],
+		"openBet":[1]
+	},
+	{
+		"level":2,
+		"nextExp":1800,
+		"openLevel":[0],
+		"openBet":[1,2]
+	}
+]

@@ -24,9 +24,10 @@ public class GameResultsAction extends Action{
 			ResponseMessage responseMessage) throws Exception {
 		GameGetResultReq req = (GameGetResultReq)requestMessage;
 		long playerId = req.getPlayerId();
+		int gameId = req.getGameId();
 		PlayerInfo playerInfo = playerSystem.getPlayerInfoByPlayerId(playerId);
 		
-		GameResult gameResult = gameSystem.getGameResult(playerId);
+		GameResult gameResult = gameSystem.getGameResult(playerId,gameId);
 		GameGetResultResp resp = (GameGetResultResp)responseMessage;
 		resp.setGameResult(gameResult);
 		resp.setPlayerInfo(playerInfo);

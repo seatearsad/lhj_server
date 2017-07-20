@@ -51,4 +51,14 @@
 			<value>62001</value>
 		</property>
 	</bean>
+	<bean name="2002" class="com.wolfroc.slots.message.game.GameDiceGetResultReq" autowire="byName" singleton="false">
+		<property name="messageId">
+			<value>2002</value>
+		</property>
+	</bean>
+	<bean name="62002" class="com.wolfroc.slots.message.game.GameDiceGetResultResp" autowire="byName" singleton="false">
+		<property name="messageId">
+			<value>62002</value>
+		</property>
+	</bean>
 </beans>

@@ -12,6 +12,12 @@
 		<property name="player_win_round" type="long">
             <column name="player_win_round" not-null="true" default="0" />
         </property>
+        <property name="total_dice_round" type="long">
+            <column name="total_dice_round" not-null="true" default="0" />
+        </property>
+		<property name="player_dice_win_round" type="long">
+            <column name="player_dice_win_round" not-null="true" default="0" />
+        </property>
         <property name="init_total_amount" type="long">
             <column name="init_total_amount" not-null="true" default="0" />
         </property>

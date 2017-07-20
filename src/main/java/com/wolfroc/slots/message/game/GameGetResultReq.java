@@ -10,5 +10,13 @@ package com.wolfroc.slots.message.game;
 import com.wolfroc.slots.message.RequestMessage;
 
 public class GameGetResultReq extends RequestMessage{
-	
+	private int gameId;
+
+	public int getGameId() {
+		return gameId;
+	}
+
+	public void setGameId(int gameId) {
+		this.gameId = gameId;
+	}
 }

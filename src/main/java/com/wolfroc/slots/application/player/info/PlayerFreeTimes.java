@@ -12,6 +12,11 @@ public class PlayerFreeTimes {
 	private int level = 0;
 	//对应关卡的免费次数
 	private int free = 0;
+	//获得免费时的线数
+	private int line = 0;
+	//获得免费时的下注数
+	private int bet = 0;
+	
 	public int getLevel() {
 		return level;
 	}
@@ -23,5 +28,17 @@ public class PlayerFreeTimes {
 	}
 	public void setFree(int free) {
 		this.free = free;
+	}
+	public int getLine() {
+		return line;
+	}
+	public void setLine(int line) {
+		this.line = line;
+	}
+	public int getBet() {
+		return bet;
+	}
+	public void setBet(int bet) {
+		this.bet = bet;
 	}
 }	

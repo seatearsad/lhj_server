@@ -4,7 +4,7 @@
 		"type":0,
 		"name":"BAR",
 		"icon":"image/ii.png",
-		"weight":[1,2,3,1,2],
+		"weight":[1,2,4,1,2],
 		"repeat":1,
 		"reward":[{"num":2,"mult":5},{"num":3,"mult":50},{"num":4,"mult":250},{"num":5,"mult":1000}]
 	},
@@ -13,7 +13,7 @@
 		"type":0,
 		"name":"图标7",
 		"icon":"image/ii.png",
-		"weight":[3,3,5,3,2],
+		"weight":[2,2,6,4,2],
 		"repeat":1,
 		"reward":[{"num":2,"mult":4},{"num":3,"mult":40},{"num":4,"mult":200},{"num":5,"mult":500}]
 	},
@@ -22,7 +22,7 @@
 		"type":0,
 		"name":"铃铛",
 		"icon":"image/ii.png",
-		"weight":[5,5,5,8,4],
+		"weight":[6,4,6,8,4],
 		"repeat":1,
 		"reward":[{"num":2,"mult":3},{"num":3,"mult":30},{"num":4,"mult":150},{"num":5,"mult":300}]
 	},
@@ -31,7 +31,7 @@
 		"type":0,
 		"name":"樱桃",
 		"icon":"image/ii.png",
-		"weight":[7,7,9,6,5],
+		"weight":[8,6,10,6,4],
 		"repeat":1,
 		"reward":[{"num":2,"mult":3},{"num":3,"mult":25},{"num":4,"mult":100},{"num":5,"mult":200}]
 	},
@@ -40,7 +40,7 @@
 		"type":0,
 		"name":"西瓜",
 		"icon":"image/ii.png",
-		"weight":[9,10,8,10,6],
+		"weight":[10,10,8,10,6],
 		"repeat":1,
 		"reward":[{"num":3,"mult":20},{"num":4,"mult":75},{"num":5,"mult":150}]
 	},
@@ -49,7 +49,7 @@
 		"type":0,
 		"name":"葡萄",
 		"icon":"image/ii.png",
-		"weight":[10,8,9,9,9],
+		"weight":[10,8,10,10,10],
 		"repeat":1,
 		"reward":[{"num":3,"mult":15},{"num":4,"mult":50},{"num":5,"mult":100}]
 	},
@@ -58,7 +58,7 @@
 		"type":0,
 		"name":"橙子",
 		"icon":"image/ii.png",
-		"weight":[10,10,7,7,8],
+		"weight":[10,10,8,8,8],
 		"repeat":1,
 		"reward":[{"num":3,"mult":10},{"num":4,"mult":30},{"num":5,"mult":80}]
 	},
@@ -67,7 +67,7 @@
 		"type":0,
 		"name":"鸭梨",
 		"icon":"image/ii.png",
-		"weight":[11,9,8,9,9],
+		"weight":[10,8,8,10,10],
 		"repeat":1,
 		"reward":[{"num":3,"mult":5},{"num":4,"mult":20},{"num":5,"mult":60}]
 	},
@@ -76,7 +76,7 @@
 		"type":0,
 		"name":"苹果",
 		"icon":"image/ii.png",
-		"weight":[12,10,10,6,5],
+		"weight":[12,10,10,6,6],
 		"repeat":1,
 		"reward":[{"num":3,"mult":4},{"num":4,"mult":15},{"num":5,"mult":50}]
 	},
@@ -85,7 +85,7 @@
 		"type":3,
 		"name":"BONUS",
 		"icon":"image/ii.png",
-		"weight":[1,1,1,1,1],
+		"weight":[5,5,5,5,5],
 		"repeat":1,
 		"reward":[{"num":3,"mult":100},{"num":4,"mult":200},{"num":5,"mult":500}]
 	},
@@ -94,7 +94,7 @@
 		"type":2,
 		"name":"Scatter",
 		"icon":"image/ii.png",
-		"weight":[3,3,2,3,2],
+		"weight":[4,2,2,4,2],
 		"repeat":1,
 		"reward":[{"num":3,"mult":5},{"num":4,"mult":10},{"num":5,"mult":20}]
 	},
@@ -103,7 +103,7 @@
 		"type":1,
 		"name":"WILD",
 		"icon":"image/ii.png",
-		"weight":[3,2,3,2,2],
+		"weight":[4,2,4,4,2],
 		"repeat":1,
 		"reward":[{"num":2,"mult":10},{"num":3,"mult":100},{"num":4,"mult":200},{"num":5,"mult":500}]
 	}

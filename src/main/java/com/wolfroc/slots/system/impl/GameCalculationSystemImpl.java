@@ -51,8 +51,10 @@ public class GameCalculationSystemImpl implements GameCalculationSystem{
 		logger.info("New GameCalculationSystemImpl!");
 	}
 	@Override
-	public GameResult getGameResult(long playerId) throws Exception {
+	public GameResult getGameResult(long playerId,int gameId) throws Exception {
 		GameResult result = new GameResult();
+		
+		gameLevelId = gameId;
 		
 		playerInfo = playerSystem.getPlayerInfoByPlayerId(playerId);
 		//取当前关卡的线数及下注数
@@ -69,6 +71,14 @@ public class GameCalculationSystemImpl implements GameCalculationSystem{
 		
 		//是否有免费次数
 		if (playerInfo.getFree_times().get(gameLevelId).getFree() > 0) {
+			//修改获得免费次数时的线数以及下注数
+			if(betMult != playerInfo.getFree_times().get(gameLevelId).getBet() || betLine != playerInfo.getFree_times().get(gameLevelId).getLine()){
+				betMult = playerInfo.getFree_times().get(gameLevelId).getBet();
+				betLine = playerInfo.getFree_times().get(gameLevelId).getLine();
+				//更新角色的存储
+				playerSystem.changeGameLevelBet(playerId, gameLevelId, betMult);
+				playerSystem.changeGameLevelLine(playerId, gameLevelId, betLine);
+			}
 			result.setFree(true);
 			betAmount = 0;
 			//更新免费次数
@@ -326,12 +336,13 @@ public class GameCalculationSystemImpl implements GameCalculationSystem{
 						totalNum++;
 					}
 				}
-				
-				lineList = addWinLineInfoList(firstId, totalNum, lineList,gameLevelInfo,lineInfo.getId());
+				//不计算Scatter
+				if(firstId != gameLevelInfo.getScatterId())
+					lineList = addWinLineInfoList(firstId, totalNum, lineList,gameLevelInfo,lineInfo.getId());
 			}
 			//计算Bonus--
 			totalNum = 0;
-			for (int j = 1; j < include.size(); ++j) {
+			for (int j = 0; j < include.size(); ++j) {
 				int currId = showReel.get(j).get(include.get(j));
 				//处理首个图标为wild
 				if(currId == gameLevelInfo.getBonusId()){
@@ -370,8 +381,9 @@ public class GameCalculationSystemImpl implements GameCalculationSystem{
 				System.out.println("line:" + winLineInfo.getLineId() + ",symbolId:" + winLineInfo.getSymbolId() + ",num:" + winLineInfo.getNum() + "IsBonus:" + winLineInfo.getIsBonus());
 				lineList.add(winLineInfo);
 				//过滤scatter和Bonus
-				if (lineId != -1 && winLineInfo.getIsBonus() != 1) {
-					payMult += reward.getMult();
+				if (lineId != -1) {
+					if(winLineInfo.getIsBonus() != 1)
+						payMult += reward.getMult();
 				}else{//记录免费旋转的次数
 					try {
 						playerSystem.updateFreeTimes(gameLevelId,reward.getMult(),playerInfo);

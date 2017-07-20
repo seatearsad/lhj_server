@@ -13,6 +13,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.aspectj.weaver.ast.Var;
+
 import com.google.gson.reflect.TypeToken;
 import com.wolfroc.slots.Util.DateTime;
 import com.wolfroc.slots.Util.JsonManager;
@@ -21,6 +23,7 @@ import com.wolfroc.slots.application.player.info.PlayerInfo;
 import com.wolfroc.slots.application.player.info.PlayerLevelBet;
 import com.wolfroc.slots.application.player.info.PlayerLevelLine;
 import com.wolfroc.slots.dao.PlayerDao;
+import com.wolfroc.slots.data.game_level.GameLevelInfo;
 import com.wolfroc.slots.exception.DaoException;
 import com.wolfroc.slots.pojo.PlayerPojo;
 
@@ -74,7 +77,7 @@ public class PlayerManagerImpl implements PlayerManager{
 		return playerInfo;
 	}
 	@Override
-	public PlayerInfo createPlayerInfo(int userId) throws Exception {
+	public PlayerInfo createPlayerInfo(int userId,Map<Integer, GameLevelInfo> gameLevelMap) throws Exception {
 		PlayerPojo pojo = new PlayerPojo();
 		pojo.setUserId(userId);
 		//之后再修改初始名称
@@ -85,19 +88,29 @@ public class PlayerManagerImpl implements PlayerManager{
 		
 		String time = DateTime.getDateTimeString();
 		
-		PlayerFreeTimes freeTimes = new PlayerFreeTimes();
+		
 		List<PlayerFreeTimes> freeTimeList = new ArrayList<PlayerFreeTimes>();
-		freeTimeList.add(freeTimes);
-		pojo.setFree_times(JsonManager.getGson().toJson(freeTimeList));
-		
-		PlayerLevelBet levelBet = new PlayerLevelBet();
 		List<PlayerLevelBet> levelBets = new ArrayList<PlayerLevelBet>();
-		levelBets.add(levelBet);
-		pojo.setLevel_bet(JsonManager.getGson().toJson(levelBets));
-		
-		PlayerLevelLine levelLine = new PlayerLevelLine();
 		List<PlayerLevelLine> levelLines = new ArrayList<PlayerLevelLine>();
-		levelLines.add(levelLine);
+		
+		for(Integer key : gameLevelMap.keySet()){
+			PlayerFreeTimes freeTimes = new PlayerFreeTimes();
+			freeTimes.setLevel(gameLevelMap.get(key).getId());
+			freeTimeList.add(freeTimes);
+			
+			PlayerLevelBet levelBet = new PlayerLevelBet();
+			levelBet.setLevel(gameLevelMap.get(key).getId());
+			levelBet.setBet(gameLevelMap.get(key).getBet().get(0));
+			levelBets.add(levelBet);
+			
+			PlayerLevelLine levelLine = new PlayerLevelLine();
+			levelLine.setLevel(gameLevelMap.get(key).getId());
+			levelLine.setLine(gameLevelMap.get(key).getLine());
+			levelLines.add(levelLine);
+		}
+		
+		pojo.setFree_times(JsonManager.getGson().toJson(freeTimeList));
+		pojo.setLevel_bet(JsonManager.getGson().toJson(levelBets));
 		pojo.setLevel_line(JsonManager.getGson().toJson(levelLines));
 		
 		pojo.setLoginTime(time);
@@ -115,6 +128,8 @@ public class PlayerManagerImpl implements PlayerManager{
 		PlayerPojo pojo = playerDao.getPlayerPojo(playerInfo.getId());
 		pojo.setExp(playerInfo.getExp());
 		pojo.setLevel(playerInfo.getLevel());
+		pojo.setTotal_dice_times(playerInfo.getTotal_dice_times());
+		pojo.setTotal_dice_win(playerInfo.getTotal_dice_win());
 		pojo.setTotal_screen(playerInfo.getTotal_screen());
 		pojo.setTotal_win(playerInfo.getTotal_win());
 		pojo.setTotal_amount(playerInfo.getTotal_amount());
@@ -142,6 +157,8 @@ public class PlayerManagerImpl implements PlayerManager{
 		info.setGender(pojo.getGender());
 		info.setExp(pojo.getExp());
 		info.setLevel(pojo.getLevel());
+		info.setTotal_dice_times(pojo.getTotal_dice_times());
+		info.setTotal_dice_win(pojo.getTotal_dice_win());
 		info.setTotal_screen(pojo.getTotal_screen());
 		info.setTotal_win(pojo.getTotal_win());
 		info.setTotal_amount(pojo.getTotal_amount());

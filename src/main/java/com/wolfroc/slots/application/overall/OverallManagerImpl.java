@@ -44,6 +44,20 @@ public class OverallManagerImpl implements OverallManager{
 		
 		overallDao.updateOverall(overall);
 	}
+	@Override
+	public void updateDiceOverall(int bet, boolean isWin) throws Exception {
+		overall.setTotal_dice_round(overall.getTotal_dice_round() + 1);
+		if (isWin) {
+			overall.setCurr_total_amount(overall.getCurr_total_amount() + bet);
+			overall.setCurr_win_amount(overall.getCurr_win_amount() + bet);
+			overall.setPlayer_dice_win_round(overall.getPlayer_dice_win_round() + 1);
+		}else{
+			overall.setCurr_total_amount(overall.getCurr_total_amount() - bet);
+			overall.setCurr_win_amount(overall.getCurr_win_amount() - bet);
+		}
+		
+		overallDao.updateOverall(overall);
+	}
 	public OverallDao getOverallDao() {
 		return overallDao;
 	}

@@ -11,9 +11,11 @@ import org.apache.log4j.Logger;
 
 import com.wolfroc.slots.data.DataManager;
 import com.wolfroc.slots.data.game_level.GameLevelInfo;
+import com.wolfroc.slots.object.game.GameDiceResult;
 import com.wolfroc.slots.object.game.GameResult;
 import com.wolfroc.slots.servlet.main.AppContext;
 import com.wolfroc.slots.system.GameCalculationSystem;
+import com.wolfroc.slots.system.GameDiceCalculationSystem;
 import com.wolfroc.slots.system.GameSystem;
 
 public class GameSystemImpl implements GameSystem{
@@ -23,9 +25,16 @@ public class GameSystemImpl implements GameSystem{
 		logger.info("GameSystemImpl");
 	}
 	@Override
-	public GameResult getGameResult(long playerId) throws Exception {
+	public GameResult getGameResult(long playerId,int gameId) throws Exception {
 		GameCalculationSystem gameCalculationSystem = AppContext.getInstance().getBean("gameCalculationSystem");
-		GameResult result = gameCalculationSystem.getGameResult(playerId);
+		GameResult result = gameCalculationSystem.getGameResult(playerId,gameId);
+		return result;
+	}
+	@Override
+	public GameDiceResult getGameDiceResult(long playerId, int los)
+			throws Exception {
+		GameDiceCalculationSystem gameDiceCalculationSystem = AppContext.getInstance().getBean("gameDiceCalculationSystem");
+		GameDiceResult result = gameDiceCalculationSystem.getGameResult(playerId,los);
 		return result;
 	}
 	@Override

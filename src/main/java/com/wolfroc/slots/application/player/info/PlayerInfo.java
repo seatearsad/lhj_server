@@ -19,9 +19,11 @@ public class PlayerInfo {
 	private byte gender;//0 男 1 女
 	private int exp;
 	private int level;
-	private long total_screen;
-	private long total_win;
-	private long total_amount;
+	private transient long total_dice_times;
+	private transient long total_dice_win;
+	private transient long total_screen;
+	private transient long total_win;
+	private transient long total_amount;
 	private long curr_amount;
 	private Map<Integer, PlayerFreeTimes> free_times;
 	private Map<Integer, PlayerLevelBet> level_bet;
@@ -65,6 +67,18 @@ public class PlayerInfo {
 	}
 	public void setLevel(int level) {
 		this.level = level;
+	}
+	public long getTotal_dice_times() {
+		return total_dice_times;
+	}
+	public void setTotal_dice_times(long total_dice_times) {
+		this.total_dice_times = total_dice_times;
+	}
+	public long getTotal_dice_win() {
+		return total_dice_win;
+	}
+	public void setTotal_dice_win(long total_dice_win) {
+		this.total_dice_win = total_dice_win;
 	}
 	public long getTotal_screen() {
 		return total_screen;

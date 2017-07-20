@@ -4,4 +4,5 @@
 	<bean name="gameSystem" class="com.wolfroc.slots.system.impl.GameSystemImpl" singleton="true" autowire="byName"/>
 	<bean name="playerSystem" class="com.wolfroc.slots.system.impl.PlayerSystemImpl" singleton="true" autowire="byName"/>
 	<bean name="gameCalculationSystem" class="com.wolfroc.slots.system.impl.GameCalculationSystemImpl" singleton="false" autowire="byName"/>
+	<bean name="gameDiceCalculationSystem" class="com.wolfroc.slots.system.impl.GameDiceCalculationSystemImpl" singleton="false" autowire="byName"/>
 </beans>

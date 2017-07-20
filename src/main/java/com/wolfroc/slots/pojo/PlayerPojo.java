@@ -15,9 +15,11 @@ public class PlayerPojo extends BasePojo{
 	private byte gender;//0 男 1 女
 	private int exp;
 	private int level = 1;
+	private long total_dice_times;
+	private long total_dice_win;
 	private long total_screen;
 	private long total_win;
-	private long total_amount = 1000;
+	private long total_amount = 10000;
 	private long curr_amount;
 	private String free_times;
 	private String level_bet;
@@ -60,6 +62,18 @@ public class PlayerPojo extends BasePojo{
 	}
 	public void setLevel(int level) {
 		this.level = level;
+	}
+	public long getTotal_dice_times() {
+		return total_dice_times;
+	}
+	public void setTotal_dice_times(long total_dice_times) {
+		this.total_dice_times = total_dice_times;
+	}
+	public long getTotal_dice_win() {
+		return total_dice_win;
+	}
+	public void setTotal_dice_win(long total_dice_win) {
+		this.total_dice_win = total_dice_win;
 	}
 	public long getTotal_screen() {
 		return total_screen;

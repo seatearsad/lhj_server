@@ -14,10 +14,14 @@ import com.wolfroc.slots.application.player.info.PlayerFreeTimes;
 import com.wolfroc.slots.application.player.info.PlayerInfo;
 import com.wolfroc.slots.application.player.info.PlayerLevelBet;
 import com.wolfroc.slots.application.player.info.PlayerLevelLine;
+import com.wolfroc.slots.data.DataManager;
+import com.wolfroc.slots.data.game_level.GameLevelInfo;
+import com.wolfroc.slots.object.game.GameDiceResult;
 import com.wolfroc.slots.system.PlayerSystem;
 
 public class PlayerSystemImpl implements PlayerSystem{
 	private PlayerManager playerManager;
+	private DataManager dataManager;
 	@Override
 	public PlayerInfo getPlayerInfoByUserId(int userId) throws Exception {
 		PlayerInfo playerInfo = playerManager.getPlayerInfoByUserId(userId);
@@ -30,7 +34,8 @@ public class PlayerSystemImpl implements PlayerSystem{
 	}
 	@Override
 	public PlayerInfo createPlayerByUserId(int userId) throws Exception {
-		PlayerInfo playerInfo = playerManager.createPlayerInfo(userId);
+		Map<Integer, GameLevelInfo> gameLevelMap = dataManager.getGameLevelMap();
+		PlayerInfo playerInfo = playerManager.createPlayerInfo(userId,gameLevelMap);
 		
 		return playerInfo;
 	}
@@ -45,6 +50,8 @@ public class PlayerSystemImpl implements PlayerSystem{
 		}
 		
 		freeTimes.setFree(freeTimes.getFree() + times);
+		freeTimes.setBet(playerInfo.getLevel_bet().get(gameLevelId).getBet());
+		freeTimes.setLine(playerInfo.getLevel_line().get(gameLevelId).getLine());
 		
 		playerManager.updatePlayerInfo(playerInfo);
 		return playerInfo;
@@ -64,6 +71,20 @@ public class PlayerSystemImpl implements PlayerSystem{
 		}
 		
 		playerManager.updatePlayerInfo(playerInfo);
+		return playerInfo;
+	}
+	@Override
+	public PlayerInfo updatePlayerInfoByDiceResult(long playerId,
+			GameDiceResult gameDiceResult,int bet) throws Exception {
+		PlayerInfo playerInfo = getPlayerInfoByPlayerId(playerId);
+		playerInfo.setCurr_amount(playerInfo.getCurr_amount() - bet);
+		playerInfo.setTotal_dice_times(playerInfo.getTotal_dice_times() + 1);
+		if (gameDiceResult.isWin()) {
+			playerInfo.setCurr_amount(playerInfo.getCurr_amount() + bet*2);
+			playerInfo.setTotal_dice_win(playerInfo.getTotal_dice_win() + 1);
+		}
+		playerManager.updatePlayerInfo(playerInfo);
+		
 		return playerInfo;
 	}
 	@Override
@@ -99,5 +120,11 @@ public class PlayerSystemImpl implements PlayerSystem{
 	}
 	public void setPlayerManager(PlayerManager playerManager) {
 		this.playerManager = playerManager;
+	}
+	public DataManager getDataManager() {
+		return dataManager;
+	}
+	public void setDataManager(DataManager dataManager) {
+		this.dataManager = dataManager;
 	}
 }

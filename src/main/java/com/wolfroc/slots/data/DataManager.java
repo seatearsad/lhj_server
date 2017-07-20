@@ -16,9 +16,12 @@ import java.util.TreeMap;
 
 import org.apache.log4j.Logger;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import com.wolfroc.slots.Util.FileUtils;
 import com.wolfroc.slots.Util.JsonManager;
+import com.wolfroc.slots.data.game_level.DiceInfo;
 import com.wolfroc.slots.data.game_level.GameLevelInfo;
 import com.wolfroc.slots.data.game_level.RationInfo;
 import com.wolfroc.slots.data.game_level.ReelInfo;
@@ -30,11 +33,13 @@ public class DataManager {
 	private Map<Integer, LineInfo> lineMap;
 	private Map<Integer, GameLevelInfo> gameLevelMap;
 	private Map<Integer, List<Integer>> ratiomMap;
+	private DiceInfo diceInfo;
 	public void init(){
 		logger.info("Data loading Start!");
 		initLine();
 		initGameLevel();
 		initRation();
+		initDice();
 	}
 	public void reloadData(){
 		logger.info("Data Reloading!");
@@ -50,6 +55,15 @@ public class DataManager {
 		{
 			lineMap.put(lineInfo.getId(), lineInfo);
 		}
+	}
+	private void initDice(){
+		String file = FileUtils.readFile(DataFileList.diceFile);
+		JsonParser jp = new JsonParser();
+		JsonObject jo = (JsonObject)jp.parse(file);
+		
+		diceInfo = new DiceInfo();
+		diceInfo.setBet(jo.get("bet").getAsInt());
+		diceInfo.setLarge(jo.get("large").getAsInt());
 	}
 	private void initGameLevel() {
 		String file = FileUtils.readFile(DataFileList.gameLevelFile);
@@ -191,6 +205,9 @@ public class DataManager {
 		GameLevelInfo gameLevelInfo = gameLevelMap.get(id);
 		return gameLevelInfo;
 	}
+	public Map<Integer, GameLevelInfo> getGameLevelMap(){
+		return gameLevelMap;
+	}
 	public Map<Integer, List<Integer>> getRatioMap(){
 		return ratiomMap;
 	}
@@ -200,5 +217,8 @@ public class DataManager {
 			lineList.add(lineMap.get(i));
 		}
 		return lineList;
+	}
+	public DiceInfo getDiceInfo(){
+		return diceInfo;
 	}
 }

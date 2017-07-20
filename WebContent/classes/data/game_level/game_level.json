@@ -1,11 +1,18 @@
 [
 	{
 		"id":0,
-		"symbol":"symbol_fruits_test",
+		"symbol":["symbol_fruits_best_low","symbol_fruits_low","symbol_fruits_sec_low","symbol_fruits","symbol_fruits_sec_height","symbol_fruits_height"],
 		"ui":"ui_1",
 		"line":9,
 		"open_level":0,
-		"max_bet":50,
-		"min_bet":1
+		"bet":[1,2,5,10]
+	},
+	{
+		"id":1,
+		"symbol":["symbol_fruits_best_low","symbol_fruits_low","symbol_fruits_sec_low","symbol_fruits","symbol_fruits_sec_height","symbol_fruits_height"],
+		"ui":"ui_1",
+		"line":15,
+		"open_level":0,
+		"bet":[1,2,5,10]
 	}
 ]

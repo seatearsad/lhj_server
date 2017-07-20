@@ -8,5 +8,6 @@
 		<action name="1099" bean="playerHeartBeatAction"/>
 		
 		<action name="2001" bean="gameResultsAction"/>
+		<action name="2002" bean="gameDiceResultsAction"/>
 	</action-map>
 </aslan-app>

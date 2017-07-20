@@ -12,6 +12,8 @@ public class OverallPojo extends BasePojo{
 	private int id;
 	private long total_round;
 	private long player_win_round;
+	private long total_dice_round;
+	private long player_dice_win_round;
 	private long init_total_amount;
 	private long curr_total_amount;
 	private long curr_win_amount;
@@ -32,6 +34,18 @@ public class OverallPojo extends BasePojo{
 	}
 	public void setPlayer_win_round(long player_win_round) {
 		this.player_win_round = player_win_round;
+	}
+	public long getTotal_dice_round() {
+		return total_dice_round;
+	}
+	public void setTotal_dice_round(long total_dice_round) {
+		this.total_dice_round = total_dice_round;
+	}
+	public long getPlayer_dice_win_round() {
+		return player_dice_win_round;
+	}
+	public void setPlayer_dice_win_round(long player_dice_win_round) {
+		this.player_dice_win_round = player_dice_win_round;
 	}
 	public long getInit_total_amount() {
 		return init_total_amount;

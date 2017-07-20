@@ -10,5 +10,5 @@ package com.wolfroc.slots.system;
 import com.wolfroc.slots.object.game.GameResult;
 
 public interface GameCalculationSystem {
-	public GameResult getGameResult(long playerId) throws Exception;
+	public GameResult getGameResult(long playerId,int gameId) throws Exception;
 }

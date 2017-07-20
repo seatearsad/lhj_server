@@ -16,4 +16,6 @@ public interface OverallManager {
 	public OverallPojo getOverallPojo() throws Exception;
 	//更新全局信息
 	public void updateOverall(int betAmount,int payAmount,boolean isWin) throws Exception;
+	//更新骰子游戏全局信息
+	public void updateDiceOverall(int bet,boolean isWin)throws Exception;
 }

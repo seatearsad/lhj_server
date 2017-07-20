@@ -8,6 +8,7 @@
 package com.wolfroc.slots.system;
 
 import com.wolfroc.slots.application.player.info.PlayerInfo;
+import com.wolfroc.slots.object.game.GameDiceResult;
 
 public interface PlayerSystem {
 	public PlayerInfo createPlayerByUserId(int userId)throws Exception;
@@ -17,4 +18,5 @@ public interface PlayerSystem {
 	public PlayerInfo updatePlayerInfoByGameResult(long playerId,int betAmount,int payAmount,boolean isWin,boolean isFree)throws Exception;
 	public PlayerInfo changeGameLevelLine(long playerId,int gameLevelId,int line)throws Exception;
 	public PlayerInfo changeGameLevelBet(long playerId,int gameLevelId,int bet)throws Exception;
+	public PlayerInfo updatePlayerInfoByDiceResult(long playerId,GameDiceResult gameDiceResult,int bet)throws Exception;
 }

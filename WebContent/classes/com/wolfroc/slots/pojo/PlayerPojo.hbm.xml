@@ -21,6 +21,12 @@
         <property name="level" type="int">
             <column name="level" not-null="true" default="1" />
         </property>
+        <property name="total_dice_times" type="long">
+            <column name="total_dice_times" not-null="true" default="0" />
+        </property>
+        <property name="total_dice_win" type="long">
+            <column name="total_dice_win" not-null="true" default="0" />
+        </property>
         <property name="total_screen" type="long">
             <column name="total_screen" not-null="true" default="0" />
         </property>
