@@ -9,5 +9,6 @@
 		
 		<action name="2001" bean="gameResultsAction"/>
 		<action name="2002" bean="gameDiceResultsAction"/>
+		<action name="2003" bean="gameBonusResultsAction"/>
 	</action-map>
 </aslan-app>

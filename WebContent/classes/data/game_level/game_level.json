@@ -1,7 +1,7 @@
 [
 	{
 		"id":0,
-		"symbol":["symbol_fruits_best_low","symbol_fruits_low","symbol_fruits_sec_low","symbol_fruits","symbol_fruits_sec_height","symbol_fruits_height"],
+		"symbol":["symbol_fruits","symbol_fruits","symbol_fruits","symbol_fruits","symbol_fruits","symbol_fruits"],
 		"ui":"ui_1",
 		"line":9,
 		"open_level":0,

@@ -85,7 +85,7 @@
 		"type":3,
 		"name":"BONUS",
 		"icon":"image/ii.png",
-		"weight":[5,5,5,5,5],
+		"weight":[10,10,10,10,10],
 		"repeat":1,
 		"reward":[{"num":3,"mult":100},{"num":4,"mult":200},{"num":5,"mult":500}]
 	},
