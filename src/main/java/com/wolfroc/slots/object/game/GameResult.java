@@ -32,6 +32,8 @@ public class GameResult {
 	private boolean isEnough = true;
 	//是否包含免费旋转奖励
 	private boolean isWinFree = false;
+	//是否包含bonus
+	private boolean isWinBonus = false;
 	
 	public boolean isWin() {
 		return isWin;
@@ -98,5 +100,11 @@ public class GameResult {
 	}
 	public void setWinFree(boolean isWinFree) {
 		this.isWinFree = isWinFree;
+	}
+	public boolean isWinBonus() {
+		return isWinBonus;
+	}
+	public void setWinBonus(boolean isWinBonus) {
+		this.isWinBonus = isWinBonus;
 	}
 }

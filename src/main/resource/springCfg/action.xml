@@ -7,5 +7,6 @@
 	<bean name="playerGameLevelBetAction" class="com.wolfroc.slots.action.PlayerGameLevelBetAction" singleton="false" autowire="byName"/>
 	<bean name="gameResultsAction" class="com.wolfroc.slots.action.GameResultsAction" singleton="false" autowire="byName"/>
 	<bean name="gameDiceResultsAction" class="com.wolfroc.slots.action.GameDiceResultsAction" singleton="false" autowire="byName"/>
+	<bean name="gameBonusResultsAction" class="com.wolfroc.slots.action.GameBonusResultsAction" singleton="false" autowire="byName"/>
 	
 </beans>

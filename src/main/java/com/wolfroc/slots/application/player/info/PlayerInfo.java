@@ -32,6 +32,8 @@ public class PlayerInfo {
 	private transient String loginTime;
 	private transient String updateTime;
 	private transient String loginKey;
+	//记录此次最高的Bonus倍数
+	private transient int lastBonus;
 	public long getId() {
 		return id;
 	}
@@ -139,6 +141,12 @@ public class PlayerInfo {
 	}
 	public void setUpdateTime(String updateTime) {
 		this.updateTime = updateTime;
+	}
+	public int getLastBonus() {
+		return lastBonus;
+	}
+	public void setLastBonus(int lastBonus) {
+		this.lastBonus = lastBonus;
 	}
 	public String getLoginKey() {
 		return loginKey;

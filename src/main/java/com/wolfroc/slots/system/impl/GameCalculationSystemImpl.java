@@ -47,6 +47,9 @@ public class GameCalculationSystemImpl implements GameCalculationSystem{
 	//关卡ID之后传输过来
 	private int gameLevelId = 0;
 	
+	//总的Bonus的倍数
+	private int bonusScore = 0;
+	
 	public GameCalculationSystemImpl() {
 		logger.info("New GameCalculationSystemImpl!");
 	}
@@ -101,7 +104,12 @@ public class GameCalculationSystemImpl implements GameCalculationSystem{
 				if (info.getLineId() == -1) {
 					result.setWinFree(true);
 				}
+				if(info.getIsBonus() > 0){
+					result.setWinBonus(true);
+				}
 			}
+			//更新此次的Bonus的最大倍数
+			playerInfo.setLastBonus(this.bonusScore);
 			
 			result.setLineList(lineList);
 			result.setShowReel(showReel);
@@ -304,13 +312,24 @@ public class GameCalculationSystemImpl implements GameCalculationSystem{
 			LineInfo lineInfo = lineInfos.get(i);
 			List<Integer> include = lineInfo.getInclude();
 
+			//计算Bonus--////////////////////////////////////////////
+			int totalNum = 0;
+			for (int j = 0; j < include.size(); ++j) {
+				int currId = showReel.get(j).get(include.get(j));
+				
+				if(currId == gameLevelInfo.getBonusId()){
+					totalNum++;
+				}
+			}
+			lineList = addWinLineInfoList(gameLevelInfo.getBonusId(), totalNum, lineList,gameLevelInfo,lineInfo.getId());
+			////////////////////////////////////////////////////////
 			int firstId = showReel.get(0).get(include.get(0));
 			//分散符号跳过
 			if (firstId == gameLevelInfo.getScatterId()) {
 				continue;
 			}
 			//连续的wild
-			int totalNum = 1;
+			totalNum = 1;
 			for (int j = 1; j < include.size(); ++j) {
 				int currId = showReel.get(j).get(include.get(j));
 				if(firstId == gameLevelInfo.getWildId() && currId == gameLevelInfo.getWildId()){
@@ -340,16 +359,7 @@ public class GameCalculationSystemImpl implements GameCalculationSystem{
 				if(firstId != gameLevelInfo.getScatterId())
 					lineList = addWinLineInfoList(firstId, totalNum, lineList,gameLevelInfo,lineInfo.getId());
 			}
-			//计算Bonus--
-			totalNum = 0;
-			for (int j = 0; j < include.size(); ++j) {
-				int currId = showReel.get(j).get(include.get(j));
-				//处理首个图标为wild
-				if(currId == gameLevelInfo.getBonusId()){
-					totalNum++;
-				}
-				lineList = addWinLineInfoList(gameLevelInfo.getBonusId(), totalNum, lineList,gameLevelInfo,lineInfo.getId());
-			}
+			
 			
 			//处理前面全部都是野蛮符号的
 //			if(firstId == gameLevelInfo.getWildId()){
@@ -373,8 +383,10 @@ public class GameCalculationSystemImpl implements GameCalculationSystem{
 				winLineInfo.setSymbolId(firstId);
 				winLineInfo.setNum(totalNum);
 				//如果是Bonus标记一下
-				if(firstId == gameLevelInfo.getBonusId())
-					winLineInfo.setIsBonus(1);
+				if(firstId == gameLevelInfo.getBonusId()){
+					winLineInfo.setIsBonus(reward.getMult());
+					this.bonusScore += reward.getMult();
+				}
 				else
 					winLineInfo.setIsBonus(0);
 				
@@ -382,7 +394,7 @@ public class GameCalculationSystemImpl implements GameCalculationSystem{
 				lineList.add(winLineInfo);
 				//过滤scatter和Bonus
 				if (lineId != -1) {
-					if(winLineInfo.getIsBonus() != 1)
+					if(winLineInfo.getIsBonus() == 0)
 						payMult += reward.getMult();
 				}else{//记录免费旋转的次数
 					try {

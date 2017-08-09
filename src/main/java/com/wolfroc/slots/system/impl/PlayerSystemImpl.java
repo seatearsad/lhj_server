@@ -115,6 +115,21 @@ public class PlayerSystemImpl implements PlayerSystem{
 		
 		return playerInfo;
 	}
+	@Override
+	public PlayerInfo updateBonusScore(long playerId, int gameId, int score)
+			throws Exception {
+		PlayerInfo playerInfo = playerManager.getPlayerInfo(playerId);
+		
+		int winNum = 0;
+		///正常的记录不能大于记录的倍数
+		if(playerInfo.getLastBonus() >= score)
+			winNum = playerInfo.getLevel_bet().get(gameId).getBet() * score;
+		
+		playerInfo.setCurr_amount(playerInfo.getCurr_amount() + winNum);
+		
+		playerManager.updatePlayerInfo(playerInfo);
+		return playerInfo;
+	}
 	public PlayerManager getPlayerManager() {
 		return playerManager;
 	}

@@ -19,4 +19,5 @@ public interface PlayerSystem {
 	public PlayerInfo changeGameLevelLine(long playerId,int gameLevelId,int line)throws Exception;
 	public PlayerInfo changeGameLevelBet(long playerId,int gameLevelId,int bet)throws Exception;
 	public PlayerInfo updatePlayerInfoByDiceResult(long playerId,GameDiceResult gameDiceResult,int bet)throws Exception;
+	public PlayerInfo updateBonusScore(long playerId,int gameId,int score)throws Exception;
 }
